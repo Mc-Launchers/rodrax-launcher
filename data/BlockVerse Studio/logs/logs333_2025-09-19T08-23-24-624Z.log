@@ -1,0 +1,31 @@
+[2025-09-19T08-23-24-624Z] [LAUNCHER] Logger initialized.
+[2025-09-19T08:23:24.682Z] [LAUNCHER] [LOG]: String Iniciando la configuracion del Launcher...
+[2025-09-19T08:23:24.688Z] [LAUNCHER] [LOG]: Object {
+  "account_selected": 1,
+  "instance_selct": "98aaa771710034f51af3f01545713620667d0046",
+  "java_config": {
+    "java_path": null,
+    "java_memory": {
+      "min": 5,
+      "max": 7
+    }
+  },
+  "game_config": {
+    "screen_size": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "launcher_config": {
+    "download_multi": 30,
+    "theme": "dark",
+    "closeLauncher": "close-launcher",
+    "intelEnabledMac": true
+  },
+  "ID": 1
+}
+[2025-09-19T08:23:24.689Z] [LAUNCHER] [LOG]: String Iniciando Login Panel...
+[2025-09-19T08:23:24.701Z] [LAUNCHER] [LOG]: String Iniciando Home Panel...
+[2025-09-19T08:23:24.704Z] [LAUNCHER] [LOG]: String Iniciando Lobby Panel...
+[2025-09-19T08:23:24.706Z] [LAUNCHER] [LOG]: String Iniciando Settings Panel...
+[2025-09-19T08:23:24.776Z] [LAUNCHER] [LOG]: Array []
