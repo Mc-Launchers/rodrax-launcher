@@ -87,7 +87,7 @@ const setupDiscordRPC = () => {
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoRodax',
+                        large_image: 'logoBlockVerse',
                         large_text: 'Streamer'
                     },
                     instance: false,
@@ -132,7 +132,7 @@ const setupDiscordRPC = () => {
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoRodax',
+                        large_image: 'logoBlockVerse',
                         large_text: 'Streamer'
                     },
                     instance: false,
@@ -147,7 +147,7 @@ const setupDiscordRPC = () => {
 
 const setupAutoUpdater = () => {
     autoUpdater.logger = require('electron-log');
-    autoUpdater.logger.transports.file.level = 'debug';
+    // autoUpdater.logger.transports.file.level = 'debug';
     const arch = os.arch();
     autoUpdater.logger.info(`Platform: ${os.platform()}`);
     autoUpdater.logger.info(`Arch: ${arch}`);
@@ -162,19 +162,24 @@ const setupAutoUpdater = () => {
             UpdateWindow.getWindow()?.webContents.send('update-error', err);
             break;
     }
-    autoUpdater.autoDownload = false;
-    autoUpdater.setFeedURL({
-        provider: 'github',
-        owner: 'Mc-Launchers',
-        repo: 'BlockVerse-Studio-Launcher',
-        private: true,
-        token: process.env.GITHUB_TOKEN
-    });
-
-    ipcMain.handle('update-app', async () => {
+    autoUpdater.autoDownload = true;
+    
+    ipcMain.handle('update-app', async (_, token) => {
+        if (!token) {
+            autoUpdater.logger.error('It was not possible to get the github token.');
+            UpdateWindow.getWindow()?.webContents.send('update-error', 'No se pudo obtener el token de Github.');
+            return;
+        }
+        autoUpdater.setFeedURL({
+            provider: 'github',
+            owner: 'Mc-Launchers',
+            repo: 'BlockVerse-Studio-Launcher',
+            private: true,
+            token
+        });
         try {
-            const res = await autoUpdater.checkForUpdates();
-            return res;
+            const { updateInfo } = await autoUpdater.checkForUpdates();
+            return updateInfo;
         } catch (error) {
             return { error: true, message: error.message };
         }

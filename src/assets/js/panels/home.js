@@ -420,6 +420,7 @@ class Home {
                 max: `${configClient.java_config.java_memory.max * 1024}M`
             }
         }
+        console.debugFile(`Iniciando el juego con las siguientes opciones: ${JSON.stringify(opt)}`);
         
         launch.Launch(opt);
         

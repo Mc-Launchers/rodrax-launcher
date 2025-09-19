@@ -28,7 +28,7 @@ class Splash {
 	async startAnimation() {
 		let splashes = [{
 			"message": "  ",
-			"author": "Rodrax Launcher Client"
+			"author": "BlockVerse Studio Client"
 		}, ]
         let splash = splashes[Math.floor(Math.random() * splashes.length)];
         this.splashMessage.textContent = splash.message;
@@ -50,10 +50,19 @@ class Splash {
         if (dev) return this.startLauncher();
         this.setStatus(`Revisando version...`);
 
-        ipcRenderer.invoke('update-app').then(update => {
+        const printEnhancedError = (error) => {
+            return (error.message || error) + (error.extraInfo ? `<br><h2>${error.extraInfo}</h2>` : '');
+        };
+
+        const token = await config.GetConfig().then(res => res.gh_token || '').catch(err => {
+            console.error(`Error al obtener el token: ${printEnhancedError(err)}`);
+            return '';
+        });
+
+        ipcRenderer.invoke('update-app', token).then(update => {
             console.log(update);
         }).catch(err => {
-            return this.shutdown(`Error al buscar actualizaciones.`);
+            return this.shutdown(`Error al buscar actualizaciones.<br>${printEnhancedError(err)}`);
         });
 
 
@@ -75,7 +84,7 @@ class Splash {
 
         ipcRenderer.on('update-error', (event, error) => {
             console.error(`Error en el auto-updater: ${error}`);
-            this.setStatus(`Error al actualizar.<br>${error.message || error + (error.extraInfo ? "<br>" + error.extraInfo : "")}`);
+            this.setStatus(`Error al actualizar.<br>${printEnhancedError(error)}`);
         });
 
         ipcRenderer.on('unzip-start', () => {
@@ -85,7 +94,7 @@ class Splash {
 
         ipcRenderer.on('unzip-error', (event, error) => {
             console.error(`Error al descomprimir: ${error}`);
-            this.shutdown(`Error al descomprimir.<br>${error.message || error + (error.extraInfo ? "<br>" + error.extraInfo : "")}`);
+            this.shutdown(`Error al descomprimir.<br>${printEnhancedError(error)}`);
         });
     }
 
