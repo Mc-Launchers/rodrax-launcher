@@ -1,15 +1,15 @@
 {
-    "name": "blockversestudio",
-    "preductname": "BlockVerse Studio",
+    "name": "rodraxlauncher",
+    "preductname": "Rodrax Launcher",
     "version": "0.0.4",
-    "description": "Launcher para eventos de BlockVerse Studio.",
+    "description": "Launcher para eventos de Rodrax Launcher.",
     "main": "src/app.js",
     "author": {
         "name": "Carlitos",
         "email": "discordcarlossg@gmail.com",
         "url": "https://twitter.com/Carlitoss_sg"
     },
-    "url": "http://nia.boxmine.xyz:4006/base",
+    "url": "http://nia.boxmine.xyz:4011/base",
     "engines": {
         "node": "^18.x.x"
     },
@@ -50,7 +50,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Mc-Launchers/BlockVerse-Studio-Launcher.git",
+        "url": "git+https://github.com/Mc-Launchers/rodrax-launcher.git",
         "private": true
     }
 }
