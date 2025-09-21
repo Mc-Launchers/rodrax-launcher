@@ -80,14 +80,14 @@ const setupDiscordRPC = () => {
     let startedAppTime = Date.now();
 
     ipcMain.on('new-status-discord', async () => {
-        client.login({ clientId: '1393456453918003251' });
+        client.login({ clientId: '1419471732166627358' });
         client.on('ready', () => {
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoBlockVerse',
+                        large_image: 'logoRodax',
                         large_text: 'Streamer'
                     },
                     instance: false,
@@ -103,7 +103,7 @@ const setupDiscordRPC = () => {
         console.log(status);
         if (client) await client.destroy();
         client = new rpc.Client({ transport: 'ipc' });
-        client.login({ clientId: '1393456453918003251' });
+        client.login({ clientId: '1419471732166627358' });
         client.on('ready', () => {
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
@@ -125,14 +125,14 @@ const setupDiscordRPC = () => {
     ipcMain.on('delete-and-new-status-discord', async () => {
         if (client) client.destroy();
         client = new rpc.Client({ transport: 'ipc' });
-        client.login({ clientId: '1393456453918003251' });
+        client.login({ clientId: '1419471732166627358' });
         client.on('ready', () => {
             client.request('SET_ACTIVITY', {
                 pid: process.pid,
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoBlockVerse',
+                        large_image: 'logoRodax',
                         large_text: 'Streamer'
                     },
                     instance: false,
@@ -147,7 +147,7 @@ const setupDiscordRPC = () => {
 
 const setupAutoUpdater = () => {
     autoUpdater.logger = require('electron-log');
-    // autoUpdater.logger.transports.file.level = 'debug';
+    autoUpdater.logger.transports.file.level = 'debug';
     const arch = os.arch();
     autoUpdater.logger.info(`Platform: ${os.platform()}`);
     autoUpdater.logger.info(`Arch: ${arch}`);
@@ -162,24 +162,19 @@ const setupAutoUpdater = () => {
             UpdateWindow.getWindow()?.webContents.send('update-error', err);
             break;
     }
-    autoUpdater.autoDownload = true;
-    
-    ipcMain.handle('update-app', async (_, token) => {
-        if (!token) {
-            autoUpdater.logger.error('It was not possible to get the github token.');
-            UpdateWindow.getWindow()?.webContents.send('update-error', 'No se pudo obtener el token de Github.');
-            return;
-        }
-        autoUpdater.setFeedURL({
-            provider: 'github',
-            owner: 'Mc-Launchers',
-            repo: 'BlockVerse-Studio-Launcher',
-            private: true,
-            token
-        });
+    autoUpdater.autoDownload = false;
+    autoUpdater.setFeedURL({
+        provider: 'github',
+        owner: 'Mc-Launchers',
+        repo: 'rodrax-launcher',
+        private: true,
+        token: process.env.GITHUB_TOKEN
+    });
+
+    ipcMain.handle('update-app', async () => {
         try {
-            const { updateInfo } = await autoUpdater.checkForUpdates();
-            return updateInfo;
+            const res = await autoUpdater.checkForUpdates();
+            return res;
         } catch (error) {
             return { error: true, message: error.message };
         }
