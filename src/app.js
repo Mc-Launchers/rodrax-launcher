@@ -87,7 +87,7 @@ const setupDiscordRPC = () => {
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoRodax',
+                        large_image: 'logoRodrax',
                         large_text: 'Streamer'
                     },
                     instance: false,
@@ -132,7 +132,7 @@ const setupDiscordRPC = () => {
                 activity: {
                     details: 'En el Menú',
                     assets: {
-                        large_image: 'logoRodax',
+                        large_image: 'logoRodrax',
                         large_text: 'Streamer'
                     },
                     instance: false,
